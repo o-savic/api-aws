@@ -1,2 +1,2 @@
-# api-aws 1..2..3..lambda..4
+# api-aws LAMBDA
 Repository for Spring Boot API application, testing connection with AWS and Jenkins
