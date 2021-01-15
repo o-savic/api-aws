@@ -30,7 +30,6 @@ public class DemoApplication {
 			bookRepo.save(Book.builder().title("Gone with the wind").isbn("12345").build());
 			bookRepo.save(Book.builder().title("Harry Potter").isbn("45678").build());			
 		}
-		
 	}
 	
 	@RequestMapping("/")  
