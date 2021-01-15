@@ -27,38 +27,24 @@ public class DemoApplication {
 		@Override
 		public void run(ApplicationArguments args) throws Exception {
 			// TODO Auto-generated method stub
-			//bookRepo.save(Book.builder().title("Gone with the wind").isbn("12345").build());
 			bookRepo.save(Book.builder().title("Gone with the wind").isbn("12345").build());
 			bookRepo.save(Book.builder().title("Harry Potter").isbn("45678").build());			
 		}
 		
 	}
 	
-	/*
-	@GetMapping("/")
-	public String home() {
-		return "Welcome to AWS First Deployment...!!";
-	}
-	*/
-	
 	@RequestMapping("/")  
 	  public String index() {  
 	    return "Hello world application!";  
-	  }  
+	}  
 	   
-	  @RequestMapping("/hello")  
+	@RequestMapping("/hello")  
 	  public String index(String name) {  
-	    return "Hello " + name + "!";  
-	  }  
+		return "Hello " + name + "!";  
+	}  
 	  
-	  @PostMapping("/github")
-	  public static String get_github_message() {
-		  System.out.println("Got Something from Git!");
-		  return "GitGitGit";
-	  }
 
 	public static void main(String[] args) {
-		get_github_message();
 		SpringApplication.run(DemoApplication.class, args);
 	}
 
