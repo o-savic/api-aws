@@ -7,6 +7,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.vegait.api.domain.Book;
@@ -32,10 +33,22 @@ public class DemoApplication {
 		
 	}
 	
+	/*
 	@GetMapping("/")
 	public String home() {
 		return "Welcome to AWS First Deployment...!!";
 	}
+	*/
+	
+	@RequestMapping("/")  
+	  public String index() {  
+	    return "Hello world application!";  
+	  }  
+	   
+	  @RequestMapping("/hello")  
+	  public String index(String name) {  
+	    return "Hello " + name + "!";  
+	  }  
 
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
