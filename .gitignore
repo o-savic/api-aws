@@ -29,4 +29,7 @@ build/
 
 ### VS Code ###
 .vscode/
+/ngrok.exe
+/ngrok
+ngrok
 ngrok.exe
