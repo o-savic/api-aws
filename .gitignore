@@ -36,6 +36,7 @@ ngrok.exe
 action-runner/
 action-runner
 /action-runner
+/action-runner/
 deploy/
 deploy
 /deploy
