@@ -31,7 +31,6 @@ public class GitController {
 	@PostMapping("/repository")
 	public ResponseEntity<GitDTO> cloneRepository(@RequestBody GitDTO dto) throws InvalidRemoteException, TransportException, GitAPIException, IOException {
 		String repository = dto.getName();
-		System.out.println("REPOSITORY: " + repository);
 		
 		File localPath = new File("C:\\Git\\repository");
 		Git git = Git.cloneRepository().setURI(repository)
@@ -65,13 +64,10 @@ public class GitController {
 	public void executeWrittenShell() throws IOException {
 		ProcessBuilder processBuilder = new ProcessBuilder();
 		processBuilder.directory(new File("C:\\Git\\repository"));
-
 	    // -- Windows --
 	    // Run a command
 		processBuilder.command("cmd.exe", "/c", "script.bat");
 		processBuilder.inheritIO();
-	    // Run a bat file
-	    //processBuilder.command("script.bat");
 
 	    try {
 	        Process process = processBuilder.start();
@@ -80,7 +76,6 @@ public class GitController {
 	                new InputStreamReader(process.getInputStream()));
 	        String line;
 	        while ((line = reader.readLine()) != null) {
-		        System.out.println(line);
 	            output.append(line + "\n");
 	        }
 	        int exitVal = process.waitFor();
@@ -96,9 +91,7 @@ public class GitController {
 
 	    } catch (IOException e) {
 	        e.printStackTrace();
-	        System.out.println("Usao u IOException!");
 	    } catch (InterruptedException e) {
-	    	System.out.println("Usao u interrupted exception!");
 	        e.printStackTrace();
 	    }
 	    

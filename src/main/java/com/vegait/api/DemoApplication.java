@@ -40,10 +40,6 @@ public class DemoApplication {
 	    return "Hello world application!";  
 	}  
 	   
-	@RequestMapping("/hello")  
-	  public String index(String name) {  
-		return "Hello " + name + "!";  
-	} 
 
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
