@@ -55,7 +55,7 @@ public class GitController {
 		return new ResponseEntity<GitDTO>(dto, HttpStatus.OK);
 	}
 	
-	@PostMapping("/execute")
+	@PostMapping("/writeAndExecute")
 	public ResponseEntity<CommandDTO> executeShell(@RequestBody CommandDTO dto) throws IOException {
 		
 		try (FileWriter writer = new FileWriter("script.bat", true)) {
@@ -96,6 +96,44 @@ public class GitController {
 	    
 	    return new ResponseEntity<CommandDTO>(dto, HttpStatus.OK);
 	}
+	
+	@PostMapping("/execute")
+	public ResponseEntity<CommandDTO> executeWrittenShell(@RequestBody CommandDTO dto) throws IOException {
+		ProcessBuilder processBuilder = new ProcessBuilder();
+	    // -- Windows --
+	    // Run a command
+	    processBuilder.command("cmd.exe", "/c", "dir");
+	    // Run a bat file
+	    processBuilder.command("script.bat");
+
+	    try {
+	        Process process = processBuilder.start();
+	        StringBuilder output = new StringBuilder();
+	        BufferedReader reader = new BufferedReader(
+	                new InputStreamReader(process.getInputStream()));
+	        String line;
+	        while ((line = reader.readLine()) != null) {
+	            output.append(line + "\n");
+	        }
+	        int exitVal = process.waitFor();
+	        if (exitVal == 0) {
+	            System.out.println("Success!");
+	            System.out.println(output);
+	            reader.close();
+	            //System.exit(0);
+	        } else {
+	            //abnormal...
+	        }
+
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    } catch (InterruptedException e) {
+	        e.printStackTrace();
+	    }
+	    
+	    return new ResponseEntity<CommandDTO>(dto, HttpStatus.OK);
+	}
+
 
 
 }

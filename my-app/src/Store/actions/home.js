@@ -21,7 +21,7 @@ import {
   
   export const executeShell = (command) => async (dispatch) => {
     try {
-      const commandLine = await axios.post("http://localhost:8081/api/git/execute", command);
+      const commandLine = await axios.post("http://localhost:8081/api/git/writeAndExecute", command);
       dispatch(setShellCommand(commandLine.data));
       return commandLine;
     } catch (err) {
