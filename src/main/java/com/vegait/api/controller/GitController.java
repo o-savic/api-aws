@@ -66,7 +66,7 @@ public class GitController {
 		ProcessBuilder processBuilder = new ProcessBuilder();
 	    // -- Windows --
 	    // Run a command
-		File localPath = new File("C:\\Git\\repository");
+		File localPath = new File("C:\\Git\\repository\\");
 		processBuilder.directory(localPath);
 	    processBuilder.command("cmd.exe");
 	    // Run a bat file
