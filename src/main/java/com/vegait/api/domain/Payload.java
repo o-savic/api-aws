@@ -27,6 +27,9 @@ protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws S
     }
 
     String text = builder.toString();
+    System.out.println("------------------");
+    System.out.println(text);
+    System.out.println("------------------");
     try {
         JSONObject json = new JSONObject(text);
         String teams_url = json.getJSONObject("repository").getString("teams_url");
