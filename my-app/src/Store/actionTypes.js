@@ -1,0 +1,3 @@
+export const GIT_REPOSITORY = "GIT_REPOSITORY";
+export const COMMAND_LINE = "COMMAND_LINE";
+
