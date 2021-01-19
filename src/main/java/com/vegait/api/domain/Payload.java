@@ -9,10 +9,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-
+@RestController
+@RequestMapping("/api")
 public class Payload extends HttpServlet {
 
+@RequestMapping("/")
 @Override
 protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     StringBuilder builder = new StringBuilder();
