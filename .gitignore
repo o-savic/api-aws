@@ -40,4 +40,3 @@ action-runner
 deploy/
 deploy
 /deploy
-/target/
