@@ -66,9 +66,11 @@ public class GitController {
 		ProcessBuilder processBuilder = new ProcessBuilder();
 	    // -- Windows --
 	    // Run a command
+		File localPath = new File("C:\\Git\\repository");
+		processBuilder.directory(localPath);
 	    processBuilder.command("cmd.exe");
 	    // Run a bat file
-	    processBuilder.command("C:\\Git\\repository\\script.bat");
+	    processBuilder.command("script.bat");
 
 	    try {
 	        Process process = processBuilder.start();
@@ -77,9 +79,11 @@ public class GitController {
 	                new InputStreamReader(process.getInputStream()));
 	        String line;
 	        while ((line = reader.readLine()) != null) {
+		        System.out.println(line);
 	            output.append(line + "\n");
 	        }
 	        int exitVal = process.waitFor();
+	        System.out.println(exitVal);
 	        if (exitVal == 0) {
 	            System.out.println("Success!");
 	            System.out.println(output);
@@ -91,7 +95,9 @@ public class GitController {
 
 	    } catch (IOException e) {
 	        e.printStackTrace();
+	        System.out.println("Usao u IOException!");
 	    } catch (InterruptedException e) {
+	    	System.out.println("Usao u interrupted exception!");
 	        e.printStackTrace();
 	    }
 	    
