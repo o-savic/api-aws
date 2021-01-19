@@ -6,11 +6,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import org.eclipse.jgit.api.AddCommand;
-import org.eclipse.jgit.api.CommitCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.PullCommand;
-import org.eclipse.jgit.api.PushCommand;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.InvalidRemoteException;
 import org.eclipse.jgit.api.errors.TransportException;
@@ -18,7 +15,6 @@ import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -58,7 +54,7 @@ public class GitController {
 	@PostMapping("/writeShellCommands")
 	public ResponseEntity<CommandDTO> writeShellCommands(@RequestBody CommandDTO dto) throws IOException {
 		
-		try (FileWriter writer = new FileWriter("script.bat", true)) {
+		try (FileWriter writer = new FileWriter("C:\\Git\\repository\\script.bat", true)) {
 			writer.append("\n" + dto.getLine());
 		}
 		
@@ -70,7 +66,7 @@ public class GitController {
 		ProcessBuilder processBuilder = new ProcessBuilder();
 	    // -- Windows --
 	    // Run a command
-	    processBuilder.command("cmd.exe", "/c", "dir");
+	    processBuilder.command("cmd.exe", "cd C:\\Git\\repository");
 	    // Run a bat file
 	    processBuilder.command("script.bat");
 
