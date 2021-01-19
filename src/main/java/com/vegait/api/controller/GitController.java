@@ -68,8 +68,9 @@ public class GitController {
 	    // Run a command
 		processBuilder.command("cmd.exe", "/c", "dir");
 		processBuilder.directory(new File("C:\\Git\\repository"));
+		processBuilder.inheritIO();
 	    // Run a bat file
-	    processBuilder.command("script");
+	    processBuilder.command("script.bat");
 
 	    try {
 	        Process process = processBuilder.start();
