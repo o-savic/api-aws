@@ -63,14 +63,15 @@ public class GitController {
 	
 	@PostMapping("/execute")
 	public void executeWrittenShell() throws IOException {
-		ProcessBuilder processBuilder = new ProcessBuilder("C:\\Git\\repository\\script.bat");
+		ProcessBuilder processBuilder = new ProcessBuilder();
+		processBuilder.directory(new File("C:\\Git\\repository"));
+
 	    // -- Windows --
 	    // Run a command
-		//processBuilder.command("cmd.exe", "/c", "dir");
-		processBuilder.directory(new File("C:\\Git\\repository"));
+		processBuilder.command("cmd.exe", "/c", "script.bat");
 		processBuilder.inheritIO();
 	    // Run a bat file
-	    processBuilder.command("script.bat");
+	    //processBuilder.command("script.bat");
 
 	    try {
 	        Process process = processBuilder.start();
