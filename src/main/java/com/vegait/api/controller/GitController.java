@@ -35,6 +35,9 @@ public class GitController {
 		String repository = dto.getName();
 		
 		localPath = new File("C:\\Git\\" + dto.getUsername() + "\\repository");
+		System.out.println(localPath.getPath());
+		System.out.println(localPath.getAbsolutePath());
+
 		Git git = Git.cloneRepository().setURI(repository)
 				.setDirectory(localPath)
 				.setCredentialsProvider(new UsernamePasswordCredentialsProvider("o.savic", "mkpQnhbo_mG8uo7X3udC"))
@@ -55,7 +58,7 @@ public class GitController {
 	@PostMapping("/writeShellCommands")
 	public ResponseEntity<CommandDTO> writeShellCommands(@RequestBody CommandDTO dto) throws IOException {
 		
-		try (FileWriter writer = new FileWriter(localPath + "\\script.bat", true)) {
+		try (FileWriter writer = new FileWriter(localPath.getPath() + "\\script.bat", true)) {
 			writer.append(dto.getLine() + "\n");
 		}
 		
