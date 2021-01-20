@@ -59,6 +59,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.authorizeRequests()
 			.antMatchers("/api/auth/**").permitAll()
 			.antMatchers("/api/users").permitAll()
+			.antMatchers("/api/git/execute").permitAll()
 			.anyRequest().authenticated(); //ensures that any HTTP request that comes to the filter will be checked for authentication.
 
 		//making sure that my filter is called before UsernamePasswordAuthenticationFilter
