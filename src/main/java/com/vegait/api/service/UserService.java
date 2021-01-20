@@ -34,11 +34,5 @@ public class UserService {
 		return u;
 	}
 	
-	public boolean login(User u) {
-		if (!existsByEmail(u.getEmail())) {
-			return false ;
-		}
-		return true ;
-	}
 
 }
