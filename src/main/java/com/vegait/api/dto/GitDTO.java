@@ -11,5 +11,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class GitDTO {
 	String name ;
+	String username ;
 
 }

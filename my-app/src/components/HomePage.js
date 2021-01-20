@@ -37,7 +37,8 @@ const useStyles = makeStyles((theme) => ({
 
 const CloneRepository = ({ cloneRepository, history }) => {
     const [state, setState] = React.useState({
-        name: ""
+        name: "",
+        username: localStorage.getItem("username")
     });
 
     const [error, setError] = React.useState(false);
@@ -47,6 +48,8 @@ const CloneRepository = ({ cloneRepository, history }) => {
         setState({ ...state, [e.target.name]: e.target.value });
     };
 
+    const email = localStorage.getItem("username");
+    console.log("EMAIL" + email);
     const handleSubmit = async (e) => {
         e.preventDefault();
         const res = await cloneRepository(state).then((response) => {

@@ -27,6 +27,7 @@ public class UserController {
 	
 	@PostMapping
 	public ResponseEntity<UserDTO> register(@RequestBody UserDTO dto) {
+		System.out.println("Usao u metodu da registrujem korisnika!");
 		User user = userService.register(new User(dto.getFirstName(), dto.getFirstName(), dto.getEmail(), dto.getUsername(), dto.getPassword()));
 		UserDTO createdUserDTO = modelMapper.map(user, UserDTO.class);
 		return new ResponseEntity<UserDTO>(createdUserDTO, HttpStatus.CREATED);	// code 201	

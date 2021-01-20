@@ -28,11 +28,13 @@ import com.vegait.api.dto.GitDTO;
 @RequestMapping("/api/git")
 public class GitController {
 	
+	File localPath ;
+	
 	@PostMapping("/repository")
 	public ResponseEntity<GitDTO> cloneRepository(@RequestBody GitDTO dto) throws InvalidRemoteException, TransportException, GitAPIException, IOException {
 		String repository = dto.getName();
 		
-		File localPath = new File("C:\\Git\\repository");
+		localPath = new File("C:\\Git\\" + dto.getUsername() + "\\repository");
 		Git git = Git.cloneRepository().setURI(repository)
 				.setDirectory(localPath)
 				.setCredentialsProvider(new UsernamePasswordCredentialsProvider("o.savic", "mkpQnhbo_mG8uo7X3udC"))
@@ -53,7 +55,7 @@ public class GitController {
 	@PostMapping("/writeShellCommands")
 	public ResponseEntity<CommandDTO> writeShellCommands(@RequestBody CommandDTO dto) throws IOException {
 		
-		try (FileWriter writer = new FileWriter("C:\\Git\\repository\\script.bat", true)) {
+		try (FileWriter writer = new FileWriter(localPath + "\\script.bat", true)) {
 			writer.append(dto.getLine() + "\n");
 		}
 		
@@ -63,7 +65,7 @@ public class GitController {
 	@PostMapping("/execute")
 	public void executeWrittenShell() throws IOException {
 		ProcessBuilder processBuilder = new ProcessBuilder();
-		processBuilder.directory(new File("C:\\Git\\repository"));
+		processBuilder.directory(localPath);
 	    // -- Windows --
 	    // Run a command
 		processBuilder.command("cmd.exe", "/c", "script.bat");
