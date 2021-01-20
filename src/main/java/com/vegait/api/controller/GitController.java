@@ -54,7 +54,7 @@ public class GitController {
 	public ResponseEntity<CommandDTO> writeShellCommands(@RequestBody CommandDTO dto) throws IOException {
 		
 		try (FileWriter writer = new FileWriter("C:\\Git\\repository\\script.bat", true)) {
-			writer.append("\n" + dto.getLine());
+			writer.append(dto.getLine() + "\n");
 		}
 		
 	    return new ResponseEntity<CommandDTO>(dto, HttpStatus.OK);
