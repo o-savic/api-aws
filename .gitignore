@@ -33,10 +33,7 @@ build/
 /ngrok
 ngrok
 ngrok.exe
-action-runner/
-action-runner
-/action-runner
-/action-runner/
+actions-runner/
 deploy/
 deploy
 /deploy
