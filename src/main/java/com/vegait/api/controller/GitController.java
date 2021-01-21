@@ -37,9 +37,8 @@ public class GitController {
 		String repo = arrOfStr[4];
 		String[] repo_arr = repo.split("\\.");
 		String repo_name = repo_arr[0];
-		System.out.println(repo_name);
 		
-		localPath = new File("C:\\Git\\" + dto.getUsername() + "\\" + repo_name + "\\repository");
+		localPath = new File("C:\\Git\\" + dto.getUsername() + "\\" + repo_name);
 
 		Git git = Git.cloneRepository().setURI(repository)
 				.setDirectory(localPath)
