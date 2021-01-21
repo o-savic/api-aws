@@ -6,7 +6,11 @@ import {
 
   export const cloneRepository = (git) => async (dispatch) => {
     try {
-      const gitRepository = await axios.post("http://localhost:8081/api/git/repository", git);
+      const gitRepository = await axios.post("http://localhost:8081/api/git/repository", git, {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("jwtToken"),
+      },
+    });
       dispatch(setGitRepository(gitRepository.data));
       return gitRepository;
     } catch (err) {
@@ -21,7 +25,11 @@ import {
   
   export const executeShell = (command) => async (dispatch) => {
     try {
-      const commandLine = await axios.post("http://localhost:8081/api/git/writeShellCommands", command);
+      const commandLine = await axios.post("http://localhost:8081/api/git/writeShellCommands", command, {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("jwtToken"),
+      },
+    });
       dispatch(setShellCommand(commandLine.data));
       return commandLine;
     } catch (err) {
