@@ -56,7 +56,7 @@ const ExecuteShell = ({ executeShell, history }) => {
         e.preventDefault();
         const res = await executeShell(state).then((response) => {
             if (response.status === 200) {
-                history.push("/success");
+                history.push("/repositories");
             }
         });
         setError(true);

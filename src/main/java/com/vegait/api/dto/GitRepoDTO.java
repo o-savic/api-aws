@@ -9,8 +9,14 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class GitDTO {
+public class GitRepoDTO {
+	
+	// add git repo
 	String name;
 	String username;
+	
+	// list repos
+	String location ;
+	String repository_name ;
 
 }

@@ -1,6 +1,7 @@
 import {
 GIT_REPOSITORY,
-COMMAND_LINE
+COMMAND_LINE,
+USER_REPOSITORIES
   } from "../actionTypes";
   
   const DEFAULT_STATE = {
@@ -19,6 +20,11 @@ COMMAND_LINE
           ...state,
           commandLine: action.commandLine,
         };
+        case USER_REPOSITORIES:
+          return {
+            ...state,
+            repositories: action.repositories,
+          };  
       default:
         return state;
     }

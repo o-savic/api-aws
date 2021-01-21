@@ -10,6 +10,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 import {configureStore} from "./Store/index";
 import SuccessPage from './components/SuccessPage';
+import RepositoryListPage from './components/RepositoryListPage';
 
 function App() {
   const store = configureStore();
@@ -23,6 +24,8 @@ function App() {
         <Route exact path="/success" component={SuccessPage} />
         <Route exact path="/login" component={LoginPage} />
         <Route exact path="/registration" component={RegistrationPage} />
+        <Route exact path="/repositories" component={RepositoryListPage} />
+
 
 
       </Switch>
