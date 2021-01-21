@@ -19,13 +19,14 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.vegait.api.security.services.UserDetailsServiceImpl;
 
-/** intercept every request only once and examine the header
+/**
+ * intercept every request only once and examine the header
  * 
  * @author Olga
  *
  */
 public class AuthTokenFilter extends OncePerRequestFilter {
-	
+
 	@Autowired
 	private JwtUtils jwtUtils;
 
@@ -33,32 +34,34 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 	private UserDetailsServiceImpl userDetailsService;
 
 	private static final Logger logger = LoggerFactory.getLogger(AuthTokenFilter.class);
-	
-	
-	/** What we do inside doFilterInternal():
-	– get JWT from the Authorization header (by removing Bearer prefix)
-	– if the request has JWT, validate it, parse username from it
-	– from username, get UserDetails to create an Authentication object
-	– set the current UserDetails in SecurityContext using setAuthentication(authentication) method.
-	
-	this method takes in the FilterChain because it has an option of passing on to the next filter in the filter chain or actually
-	ending the request right there
-	
-	added the last part here
-	verifying that something has not already gone into the security context (there is no already authenticated user)
-	*/
+
+	/**
+	 * What we do inside doFilterInternal(): – get JWT from the Authorization header
+	 * (by removing Bearer prefix) – if the request has JWT, validate it, parse
+	 * username from it – from username, get UserDetails to create an Authentication
+	 * object – set the current UserDetails in SecurityContext using
+	 * setAuthentication(authentication) method.
+	 * 
+	 * this method takes in the FilterChain because it has an option of passing on
+	 * to the next filter in the filter chain or actually ending the request right
+	 * there
+	 * 
+	 * added the last part here verifying that something has not already gone into
+	 * the security context (there is no already authenticated user)
+	 */
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
-		
+
 		try {
 			String jwt = parseJwt(request);
-			
-			if (jwt != null && jwtUtils.validateJwtToken(jwt) && SecurityContextHolder.getContext().getAuthentication() == null) {
+
+			if (jwt != null && jwtUtils.validateJwtToken(jwt)
+					&& SecurityContextHolder.getContext().getAuthentication() == null) {
 				String username = jwtUtils.getUserNameFromJwtToken(jwt);
 
 				UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-				UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken( 
+				UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
 						userDetails, null, userDetails.getAuthorities());
 				authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
@@ -67,8 +70,8 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 		} catch (Exception e) {
 			logger.error("Cannot set user authentication: {}", e);
 		}
-		
-		filterChain.doFilter(request, response); //handing off the control to the next filter in the filter chain
+
+		filterChain.doFilter(request, response); // handing off the control to the next filter in the filter chain
 	}
 
 	private String parseJwt(HttpServletRequest request) {

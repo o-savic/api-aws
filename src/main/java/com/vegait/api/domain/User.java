@@ -22,26 +22,26 @@ import lombok.Setter;
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id ;
-	
-	@Column(name = "first_name", nullable = false) 
-	private String firstName ;
-	
-	@Column(name = "last_name", nullable = false) 
-	private String lastName ; 
-	
+	private Long id;
+
+	@Column(name = "first_name", nullable = false)
+	private String firstName;
+
+	@Column(name = "last_name", nullable = false)
+	private String lastName;
+
 	@NotBlank
 	@Size(max = 50)
 	@Email
-	private String email ;
-	
+	private String email;
+
 	@NotBlank
 	@Column(name = "username")
-	private String username ;
-	
+	private String username;
+
 	@NotBlank
 	@Size(max = 100)
-	private String password ;
+	private String password;
 
 	public User(String firstName, String lastName, @NotBlank @Size(max = 50) @Email String email,
 			@NotBlank String username, @NotBlank @Size(max = 100) String password) {
@@ -52,8 +52,5 @@ public class User {
 		this.username = username;
 		this.password = password;
 	}
-	
-	
-	
-	
+
 }

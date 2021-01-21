@@ -27,24 +27,24 @@ import com.vegait.api.dto.GitDTO;
 @RestController
 @RequestMapping("/api/git")
 public class GitController {
-	
-	File localPath ;
-	
+
+	File localPath;
+
 	@PostMapping("/repository")
-	public ResponseEntity<GitDTO> cloneRepository(@RequestBody GitDTO dto) throws InvalidRemoteException, TransportException, GitAPIException, IOException {
+	public ResponseEntity<GitDTO> cloneRepository(@RequestBody GitDTO dto)
+			throws InvalidRemoteException, TransportException, GitAPIException, IOException {
 		String repository = dto.getName();
 		String[] arrOfStr = repository.split("/", 5);
 		String repo = arrOfStr[4];
 		String[] repo_arr = repo.split("\\.");
 		String repo_name = repo_arr[0];
-		
+
 		localPath = new File("C:\\Git\\" + dto.getUsername() + "\\" + repo_name);
 
-		Git git = Git.cloneRepository().setURI(repository)
-				.setDirectory(localPath)
+		Git git = Git.cloneRepository().setURI(repository).setDirectory(localPath)
 				.setCredentialsProvider(new UsernamePasswordCredentialsProvider("o.savic", "mkpQnhbo_mG8uo7X3udC"))
 				.call();
-	
+
 		// git pull
 		PullCommand pullCmd = git.pull();
 		try {
@@ -56,54 +56,51 @@ public class GitController {
 
 		return new ResponseEntity<GitDTO>(dto, HttpStatus.OK);
 	}
-	
+
 	@PostMapping("/writeShellCommands")
 	public ResponseEntity<CommandDTO> writeShellCommands(@RequestBody CommandDTO dto) throws IOException {
-		
+
 		try (FileWriter writer = new FileWriter(localPath.getPath() + "\\script.bat", true)) {
 			writer.append(dto.getLine() + "\n");
 		}
-		
-	    return new ResponseEntity<CommandDTO>(dto, HttpStatus.OK);
+
+		return new ResponseEntity<CommandDTO>(dto, HttpStatus.OK);
 	}
-	
+
 	@PostMapping("/execute")
 	public void executeWrittenShell() throws IOException {
 		ProcessBuilder processBuilder = new ProcessBuilder();
 		processBuilder.directory(localPath);
-	    // -- Windows --
-	    // Run a command
+		// -- Windows --
+		// Run a command
 		processBuilder.command("cmd.exe", "/c", "script.bat");
 		processBuilder.inheritIO();
 
-	    try {
-	        Process process = processBuilder.start();
-	        StringBuilder output = new StringBuilder();
-	        BufferedReader reader = new BufferedReader(
-	                new InputStreamReader(process.getInputStream()));
-	        String line;
-	        while ((line = reader.readLine()) != null) {
-	            output.append(line + "\n");
-	        }
-	        int exitVal = process.waitFor();
-	        System.out.println(exitVal);
-	        if (exitVal == 0) {
-	            System.out.println("Success!");
-	            System.out.println(output);
-	            reader.close();
-	            //System.exit(0);
-	        } else {
-	            //abnormal...
-	        }
+		try {
+			Process process = processBuilder.start();
+			StringBuilder output = new StringBuilder();
+			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+			String line;
+			while ((line = reader.readLine()) != null) {
+				output.append(line + "\n");
+			}
+			int exitVal = process.waitFor();
+			System.out.println(exitVal);
+			if (exitVal == 0) {
+				System.out.println("Success!");
+				System.out.println(output);
+				reader.close();
+				// System.exit(0);
+			} else {
+				// abnormal...
+			}
 
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    } catch (InterruptedException e) {
-	        e.printStackTrace();
-	    }
-	    
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
 	}
-
-
 
 }

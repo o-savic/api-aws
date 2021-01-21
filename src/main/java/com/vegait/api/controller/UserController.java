@@ -18,18 +18,19 @@ import com.vegait.api.service.UserService;
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
-	
+
 	@Autowired
 	private UserService userService;
 
 	@Autowired
-	private ModelMapper modelMapper ;
-	
+	private ModelMapper modelMapper;
+
 	@PostMapping
 	public ResponseEntity<UserDTO> register(@RequestBody UserDTO dto) {
-		User user = userService.register(new User(dto.getFirstName(), dto.getFirstName(), dto.getEmail(), dto.getUsername(), dto.getPassword()));
+		User user = userService.register(
+				new User(dto.getFirstName(), dto.getFirstName(), dto.getEmail(), dto.getUsername(), dto.getPassword()));
 		UserDTO createdUserDTO = modelMapper.map(user, UserDTO.class);
-		return new ResponseEntity<UserDTO>(createdUserDTO, HttpStatus.CREATED);	// code 201	
+		return new ResponseEntity<UserDTO>(createdUserDTO, HttpStatus.CREATED); // code 201
 	}
 
 }

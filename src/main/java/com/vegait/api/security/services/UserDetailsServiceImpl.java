@@ -11,10 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.vegait.api.domain.User;
 import com.vegait.api.repo.UserRepository;
 
-
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-	
+
 	@Autowired
 	private UserRepository userRepository;
 

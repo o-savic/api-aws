@@ -9,18 +9,18 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @ControllerAdvice
-public class CustomExceptionHandler extends ResponseEntityExceptionHandler{
+public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(NotFoundException.class)
-    public final ResponseEntity<Object> handleNotFoundException(NotFoundException exeption, WebRequest webRequest){
-        return handleExceptionInternal(exeption, exeption.getMessage(),
-                new HttpHeaders(), HttpStatus.NOT_FOUND, webRequest);
-    }
+	@ExceptionHandler(NotFoundException.class)
+	public final ResponseEntity<Object> handleNotFoundException(NotFoundException exeption, WebRequest webRequest) {
+		return handleExceptionInternal(exeption, exeption.getMessage(), new HttpHeaders(), HttpStatus.NOT_FOUND,
+				webRequest);
+	}
 
-    @ExceptionHandler(BadRequestException.class)
-    public final ResponseEntity<Object> handleBadRequestException(BadRequestException exeption, WebRequest webRequest){
-        return handleExceptionInternal(exeption, exeption.getMessage(),
-                new HttpHeaders(), HttpStatus.BAD_REQUEST, webRequest);
-    }
+	@ExceptionHandler(BadRequestException.class)
+	public final ResponseEntity<Object> handleBadRequestException(BadRequestException exeption, WebRequest webRequest) {
+		return handleExceptionInternal(exeption, exeption.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST,
+				webRequest);
+	}
 
 }

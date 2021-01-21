@@ -10,7 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CommandDTO {
-	
-	private String line ;
+
+	private String line;
 
 }

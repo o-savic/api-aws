@@ -13,10 +13,8 @@ import com.vegait.api.security.services.UserDetailsImpl;
 import io.jsonwebtoken.*;
 
 /**
- This class has 3 funtions:
-	- generate a JWT from email, date, expiration, secret
-	- get email from JWT
-	- validate a JWT
+ * This class has 3 funtions: - generate a JWT from email, date, expiration,
+ * secret - get email from JWT - validate a JWT
  */
 @Component
 public class JwtUtils {
@@ -32,12 +30,9 @@ public class JwtUtils {
 
 		UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
 
-		return Jwts.builder()
-				.setSubject((userPrincipal.getUsername()))
-				.setIssuedAt(new Date())
+		return Jwts.builder().setSubject((userPrincipal.getUsername())).setIssuedAt(new Date())
 				.setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
-				.signWith(SignatureAlgorithm.HS512, jwtSecret)
-				.compact();
+				.signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
 	}
 
 	public String getUserNameFromJwtToken(String token) {

@@ -10,21 +10,21 @@ import com.vegait.api.repo.UserRepository;
 
 @Service
 public class UserService {
-	
+
 	@Autowired
-	private UserRepository userRepository ;
-	
+	private UserRepository userRepository;
+
 	@Autowired
 	private PasswordEncoder encoder;
-	
+
 	public boolean existsByEmail(String email) {
 		return userRepository.existsByEmail(email);
 	}
-	
+
 	public User save(User user) {
 		return userRepository.save(user);
 	}
-	
+
 	public User register(User u) {
 		if (existsByEmail(u.getEmail())) {
 			throw new BadRequestException("User with that email already exists.");
@@ -33,6 +33,5 @@ public class UserService {
 		save(u);
 		return u;
 	}
-	
 
 }

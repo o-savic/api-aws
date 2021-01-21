@@ -10,7 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GitDTO {
-	String name ;
-	String username ;
+	String name;
+	String username;
 
 }

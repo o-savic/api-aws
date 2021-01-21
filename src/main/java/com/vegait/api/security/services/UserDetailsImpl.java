@@ -19,7 +19,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDetailsImpl implements UserDetails {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
@@ -28,9 +28,8 @@ public class UserDetailsImpl implements UserDetails {
 
 	@JsonIgnore
 	private String password;
-	
-	private Collection<? extends GrantedAuthority> authorities;
 
+	private Collection<? extends GrantedAuthority> authorities;
 
 	public UserDetailsImpl(Long id, String email, String password) {
 		super();
@@ -41,10 +40,7 @@ public class UserDetailsImpl implements UserDetails {
 
 	public static UserDetailsImpl build(User user) {
 
-		return new UserDetailsImpl(
-				user.getId(), 
-				user.getEmail(),
-				user.getPassword());
+		return new UserDetailsImpl(user.getId(), user.getEmail(), user.getPassword());
 	}
 
 	@Override
@@ -56,7 +52,7 @@ public class UserDetailsImpl implements UserDetails {
 	public String getPassword() {
 		return password;
 	}
-	
+
 	@Override
 	public String getUsername() {
 		return email;
@@ -92,7 +88,4 @@ public class UserDetailsImpl implements UserDetails {
 		return Objects.equals(id, user.id);
 	}
 
-
-
-	
 }

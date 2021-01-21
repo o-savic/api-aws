@@ -19,11 +19,11 @@ import com.vegait.api.payload.response.JwtResponse;
 import com.vegait.api.security.jwt.JwtUtils;
 import com.vegait.api.security.services.UserDetailsImpl;
 
-@CrossOrigin(origins = {"http://localhost:3000"}, maxAge = 4800, allowCredentials = "false")
+@CrossOrigin(origins = { "http://localhost:3000" }, maxAge = 4800, allowCredentials = "false")
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
-	
+
 	@Autowired
 	private AuthenticationManager authenticationManager;
 
@@ -32,18 +32,15 @@ public class AuthController {
 
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest request) {
-		Authentication authentication = authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+		Authentication authentication = authenticationManager
+				.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
 
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		String jwt = jwtUtils.generateJwtToken(authentication);
-		
-		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();		
-	
-		return ResponseEntity.ok(new JwtResponse(jwt, 
-												 userDetails.getId(), 
-												 userDetails.getEmail()
-												 ));
+
+		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+
+		return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getId(), userDetails.getEmail()));
 	}
 
 }
