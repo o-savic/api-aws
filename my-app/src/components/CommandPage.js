@@ -56,12 +56,7 @@ const ExecuteShell = ({ executeShell, history }) => {
         e.preventDefault();
         const res = await executeShell(state).then((response) => {
             if (response.status === 200) {
-                if (state.checked) {
-                    window.location.reload(false);
-                }
-                else {
-                    history.push("/success");
-                }
+                history.push("/success");
             }
         });
         setError(true);
@@ -72,7 +67,7 @@ const ExecuteShell = ({ executeShell, history }) => {
             <CssBaseline />
             <div className={classes.paper}>
                 <Typography component="h1" variant="h5">
-                    Insert command for execution
+                    Insert commands for execution
                 </Typography>
                 <form className={classes.form} noValidate>
                     <TextField
@@ -83,16 +78,14 @@ const ExecuteShell = ({ executeShell, history }) => {
                         id="line"
                         label="Shell commands"
                         name="line"
+                        multiline
+                        rows={10}
                         autoFocus
                         autoComplete="line"
                         value = {state.line}
                         error={error}
                         onChange={handleChangeTextField}
                     />
-
-                    Add another command? 
-                    <Checkbox value={state.checked} onChange={handleChangeCheckbox}>
-                    </Checkbox>
 
                     <Button
                         type="submit"
