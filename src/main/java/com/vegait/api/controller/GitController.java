@@ -33,14 +33,19 @@ public class GitController {
 	@PostMapping("/repository")
 	public ResponseEntity<GitDTO> cloneRepository(@RequestBody GitDTO dto) throws InvalidRemoteException, TransportException, GitAPIException, IOException {
 		String repository = dto.getName();
+		String[] arrOfStr = repository.split("/", 5);
+		String repo = arrOfStr[4];
+		String[] repo_arr = repo.split("\\.");
+		String repo_name = repo_arr[0];
+		System.out.println(repo_name);
 		
-		localPath = new File("C:\\Git\\" + dto.getUsername() + "\\repository");
+		localPath = new File("C:\\Git\\" + dto.getUsername() + "\\" + repo_name + "\\repository");
 
 		Git git = Git.cloneRepository().setURI(repository)
 				.setDirectory(localPath)
 				.setCredentialsProvider(new UsernamePasswordCredentialsProvider("o.savic", "mkpQnhbo_mG8uo7X3udC"))
 				.call();
-		
+	
 		// git pull
 		PullCommand pullCmd = git.pull();
 		try {
