@@ -11,8 +11,8 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import {connect} from "react-redux";
-import {registerUser} from "../Store/actions/user";
+import { connect } from "react-redux";
+import { registerUser } from "../Store/actions/user";
 import { withRouter } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -70,7 +70,7 @@ const RegisterUser = ({ registerUser, history }) => {
                     Regsiter
                 </Typography>
                 <form className={classes.form} noValidate>
-                <TextField
+                    <TextField
                         variant="outlined"
                         margin="normal"
                         required
@@ -152,11 +152,11 @@ const RegisterUser = ({ registerUser, history }) => {
                         OK
                     </Button>
                     <Grid container>
-                      <Grid item xs>
-                        <Link href="/login" variant="body2">
-                        Already have an account?
+                        <Grid item xs>
+                            <Link href="/login" variant="body2">
+                                Already have an account?
                         </Link>
-                    </Grid>
+                        </Grid>
                     </Grid>
 
                 </form>

@@ -13,7 +13,7 @@ import Paper from "@material-ui/core/Paper";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import dense from "@material-ui/core/List/ListContext";
-import {getUserRepositories} from "../Store/actions/home";
+import { getUserRepositories } from "../Store/actions/home";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import EditCommandDialog from "./dialogs/EditCommandDialog";
 
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: "column",
         height: 240,
         align: "center",
-        background : "lightblue"
+        background: "lightblue"
     },
 
 
@@ -48,7 +48,7 @@ const RepositoriesList = ({ getUserRepositories, repositories }) => {
 
     return (
         <div className={classes.content}>
-            <br/>
+            <br />
             <div align="center">
                 <h1><b><i>My Repositories</i></b></h1>
             </div>
@@ -66,10 +66,10 @@ const RepositoriesList = ({ getUserRepositories, repositories }) => {
                                     <b><i>Name</i></b>
                                 </TableCell>
                                 <TableCell align="center">
-                                <b><i>Location</i></b>
+                                    <b><i>Location</i></b>
                                 </TableCell>
                                 <TableCell align="center">
-                                <b><i>Command</i></b>
+                                    <b><i>Command</i></b>
                                 </TableCell>
                                 <TableCell>
                                 </TableCell>
@@ -89,16 +89,16 @@ const RepositoriesList = ({ getUserRepositories, repositories }) => {
                                                 <p>{row.repository_name} </p>
                                             </TableCell>
                                             <TableCell align="center">
-                                            <p>{row.location} </p>
+                                                <p>{row.location} </p>
                                             </TableCell>
                                             <TableCell align="center">
-                                            <p> {row.command}   </p>
+                                                <p> {row.command}   </p>
                                             </TableCell>
                                             <TableCell align="right">
                                                 <EditCommandDialog
                                                     idV={row.id}
-                                                    commandV = {row.command}
-                                                    locationV = {row.location}
+                                                    commandV={row.command}
+                                                    locationV={row.location}
                                                 />
                                             </TableCell>
                                         </TableRow>
@@ -118,8 +118,8 @@ const RepositoriesList = ({ getUserRepositories, repositories }) => {
                 color="primary"
                 className={classes.submit}
                 href="/home"
-                >
-            Clone new repository
+            >
+                Clone new repository
             </Button>
 
         </div>
@@ -127,7 +127,7 @@ const RepositoriesList = ({ getUserRepositories, repositories }) => {
 };
 
 const mapStateToProps = state => ({
-        repositories: state.home.repositories
+    repositories: state.home.repositories
 });
 
 export default withRouter(

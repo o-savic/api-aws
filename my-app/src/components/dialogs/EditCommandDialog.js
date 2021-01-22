@@ -6,8 +6,8 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import {connect} from "react-redux";
-import withRouter from "react-router-dom/es/withRouter";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import MenuItem from "@material-ui/core/MenuItem";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import FormControl from "@material-ui/core/FormControl";
@@ -32,9 +32,9 @@ const FormDialog = ({ idV, commandV, locationV, editRepo }) => {
     const [open, setOpen] = React.useState(false);
 
     const [state, setState] = React.useState({
-        command : (commandV == null) ? "" : commandV,
-        id : (idV == null) ? "": idV,
-        location : (locationV == null) ? "": locationV,
+        command: (commandV == null) ? "" : commandV,
+        id: (idV == null) ? "" : idV,
+        location: (locationV == null) ? "" : locationV,
 
     });
     const handleChangeTextField = (e) => {
@@ -48,13 +48,13 @@ const FormDialog = ({ idV, commandV, locationV, editRepo }) => {
         setOpen(false);
     };
     const handleYES = async (e) => {
-            const res = await editRepo(state).then((response) => {
-                if (response.status === 200) {
-                    setOpen(false);
-                    window.location.reload();
-                }
-            });
-            setError(true);
+        const res = await editRepo(state).then((response) => {
+            if (response.status === 200) {
+                setOpen(false);
+                window.location.reload();
+            }
+        });
+        setError(true);
     };
     return (
         <div>
@@ -83,7 +83,7 @@ const FormDialog = ({ idV, commandV, locationV, editRepo }) => {
                         error={error}
                         onChange={handleChangeTextField}
                     />
-                    
+
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">
