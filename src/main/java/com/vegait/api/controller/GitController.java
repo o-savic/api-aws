@@ -19,7 +19,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -85,7 +87,7 @@ public class GitController {
 	@PostMapping("/writeShellCommands")
 	public ResponseEntity<CommandDTO> writeShellCommands(@RequestBody CommandDTO dto) throws IOException {
 
-		try (FileWriter writer = new FileWriter(localPath.getPath() + "\\script.bat", true)) {
+		try (FileWriter writer = new FileWriter(localPath.getPath() + "\\script.bat")) {
 			writer.append(dto.getLine() + "\n");
 		}
 
@@ -136,6 +138,18 @@ public class GitController {
 		ArrayList<GitRepo> repos = new ArrayList<GitRepo>();
 		repos = (ArrayList<GitRepo>) gitRepoRepository.findReposByUser(gitRepo.getUser().getId());
 		return new ResponseEntity<List<GitRepo>>(repos, HttpStatus.OK) ;
+	}
+	
+	@PutMapping("/{id}")
+	public ResponseEntity<GitRepo> updateGitRepo(@PathVariable Long id, @RequestBody GitRepoDTO dto) throws IOException {
+		gitRepo = gitRepoRepository.findByRepoId(id);
+		gitRepo.setCommand(dto.getCommand());
+		gitRepoRepository.save(gitRepo);
+		localPath = new File(dto.getLocation());
+		System.out.println("Local path: " + localPath.getPath());
+		CommandDTO commandDTO = new CommandDTO(dto.getCommand());
+		writeShellCommands(commandDTO);
+		return new ResponseEntity<GitRepo>(gitRepo, HttpStatus.OK);	
 	}
 	
 	

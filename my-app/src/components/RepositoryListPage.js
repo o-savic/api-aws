@@ -4,6 +4,9 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import Grid from "@material-ui/core/Grid";
+import Link from "@material-ui/core/Link";
+import Button from '@material-ui/core/Button';
 
 import Paper from "@material-ui/core/Paper";
 
@@ -92,7 +95,11 @@ const RepositoriesList = ({ getUserRepositories, repositories }) => {
                                             <p> {row.command}   </p>
                                             </TableCell>
                                             <TableCell align="right">
-                                                
+                                                <EditCommandDialog
+                                                    idV={row.id}
+                                                    commandV = {row.command}
+                                                    locationV = {row.location}
+                                                />
                                             </TableCell>
                                         </TableRow>
                                     );
@@ -103,6 +110,17 @@ const RepositoriesList = ({ getUserRepositories, repositories }) => {
                     </Table>
                 </div>
             </Paper>
+            <br>
+            </br>
+            <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+                href="/home"
+                >
+            Clone new repository
+            </Button>
 
         </div>
     );

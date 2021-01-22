@@ -18,5 +18,8 @@ public class GitRepoDTO {
 	// list repos
 	String location ;
 	String repository_name ;
+	
+	// edit repo
+	String command ;
 
 }

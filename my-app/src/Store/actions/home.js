@@ -1,7 +1,8 @@
 import {
     GIT_REPOSITORY,
     COMMAND_LINE,
-    USER_REPOSITORIES
+    USER_REPOSITORIES,
+    EDITED_REPO
   } from "../actionTypes";
   import axios from "axios";
 
@@ -59,5 +60,24 @@ import {
   export const setUserRepositories = (repositories) => ({
     type: USER_REPOSITORIES,
     repositories,
+  });
+
+  export const editRepo = (repository) => async (dispatch) => {
+    try {
+      const editedRepo = await axios.put("http://localhost:8081/api/git" + `/${repository.id}`, repository, {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("jwtToken"),
+      },
+    });
+      dispatch(setEditedRepo(editedRepo.data));
+      return editedRepo;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  
+  export const setEditedRepo = (editedRepo) => ({
+    type: EDITED_REPO,
+    editedRepo,
   });
   

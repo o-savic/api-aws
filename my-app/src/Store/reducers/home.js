@@ -1,7 +1,8 @@
 import {
 GIT_REPOSITORY,
 COMMAND_LINE,
-USER_REPOSITORIES
+USER_REPOSITORIES,
+EDITED_REPO
   } from "../actionTypes";
   
   const DEFAULT_STATE = {
@@ -25,6 +26,11 @@ USER_REPOSITORIES
             ...state,
             repositories: action.repositories,
           };  
+      case EDITED_REPO:
+      return {
+        ...state,
+        editedRepo: action.editedRepo,
+      };    
       default:
         return state;
     }
