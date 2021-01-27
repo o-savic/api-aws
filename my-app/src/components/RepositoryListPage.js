@@ -40,11 +40,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const RepositoriesList = ({ getUserRepositories, repositories }) => {
+
+    const [updated, setUpdated] = React.useState(false);
     useEffect(() => {
-        getUserRepositories()
-    }, []);
+        getUserRepositories();
+        setUpdated(false);
+    }, [updated]);
 
     const classes = useStyles();
+
+    const onUpdateTable = (value) => {
+        setUpdated(value);
+    }
 
     return (
         <div className={classes.content}>
@@ -99,6 +106,7 @@ const RepositoriesList = ({ getUserRepositories, repositories }) => {
                                                     idV={row.id}
                                                     commandV={row.command}
                                                     locationV={row.location}
+                                                    onUpdate={onUpdateTable}
                                                 />
                                             </TableCell>
                                         </TableRow>

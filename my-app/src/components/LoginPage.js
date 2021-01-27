@@ -67,7 +67,6 @@ const SignInSide = ({ login, history }) => {
     const res = await login(state).then((response) => {
       if (response.status === 200) {
           history.push("/home");
-       
       }
     });
     setError(true);

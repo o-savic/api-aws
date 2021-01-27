@@ -15,7 +15,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import { editRepo } from '../../Store/actions/home';
 
-const FormDialog = ({ idV, commandV, locationV, editRepo }) => {
+const FormDialog = ({ idV, commandV, locationV, onUpdate, editRepo }) => {
 
     const useStyles = makeStyles((theme) => ({
         formControl: {
@@ -35,7 +35,6 @@ const FormDialog = ({ idV, commandV, locationV, editRepo }) => {
         command: (commandV == null) ? "" : commandV,
         id: (idV == null) ? "" : idV,
         location: (locationV == null) ? "" : locationV,
-
     });
     const handleChangeTextField = (e) => {
         setState({ ...state, [e.target.name]: e.target.value });
@@ -44,14 +43,17 @@ const FormDialog = ({ idV, commandV, locationV, editRepo }) => {
     const handleClickOpen = () => {
         setOpen(true);
     };
+
     const handleClose = () => {
         setOpen(false);
+        onUpdate(false);
     };
+
     const handleYES = async (e) => {
         const res = await editRepo(state).then((response) => {
             if (response.status === 200) {
                 setOpen(false);
-                window.location.reload();
+                onUpdate(true);
             }
         });
         setError(true);

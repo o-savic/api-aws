@@ -118,9 +118,7 @@ public class GitController {
 			System.out.println(exitVal);
 			if (exitVal == 0) {
 				System.out.println("Success!");
-				System.out.println(output);
 				reader.close();
-				// System.exit(0);
 			} else {
 				// abnormal...
 			}
@@ -146,7 +144,6 @@ public class GitController {
 		gitRepo.setCommand(dto.getCommand());
 		gitRepoRepository.save(gitRepo);
 		localPath = new File(dto.getLocation());
-		System.out.println("Local path: " + localPath.getPath());
 		CommandDTO commandDTO = new CommandDTO(dto.getCommand());
 		writeShellCommands(commandDTO);
 		return new ResponseEntity<GitRepo>(gitRepo, HttpStatus.OK);	

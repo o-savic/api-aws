@@ -49,7 +49,6 @@ const CloneRepository = ({ cloneRepository, history }) => {
     };
 
     const email = localStorage.getItem("username");
-    console.log("EMAIL" + email);
     const handleSubmit = async (e) => {
         e.preventDefault();
         const res = await cloneRepository(state).then((response) => {
