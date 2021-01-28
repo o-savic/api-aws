@@ -17,92 +17,92 @@ import { editRepo } from '../../Store/actions/home';
 
 const FormDialog = ({ idV, commandV, locationV, onUpdate, editRepo }) => {
 
-    const useStyles = makeStyles((theme) => ({
-        formControl: {
-            margin: theme.spacing(1),
-            minWidth: 120,
-        },
-        selectEmpty: {
-            marginTop: theme.spacing(2),
-        },
-    }));
-    const classes = useStyles();
+  const useStyles = makeStyles((theme) => ({
+    formControl: {
+      margin: theme.spacing(1),
+      minWidth: 120,
+    },
+    selectEmpty: {
+      marginTop: theme.spacing(2),
+    },
+  }));
+  const classes = useStyles();
 
-    const [error, setError] = React.useState(false);
-    const [open, setOpen] = React.useState(false);
+  const [error, setError] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
 
-    const [state, setState] = React.useState({
-        command: (commandV == null) ? "" : commandV,
-        id: (idV == null) ? "" : idV,
-        location: (locationV == null) ? "" : locationV,
-    });
-    const handleChangeTextField = (e) => {
-        setState({ ...state, [e.target.name]: e.target.value });
-    };
+  const [state, setState] = React.useState({
+    command: (commandV == null) ? "" : commandV,
+    id: (idV == null) ? "" : idV,
+    location: (locationV == null) ? "" : locationV,
+  });
+  const handleChangeTextField = (e) => {
+    setState({ ...state, [e.target.name]: e.target.value });
+  };
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
 
-    const handleClose = () => {
+  const handleClose = () => {
+    setOpen(false);
+    onUpdate(false);
+  };
+
+  const handleYES = async (e) => {
+    const res = await editRepo(state).then((response) => {
+      if (response.status === 200) {
         setOpen(false);
-        onUpdate(false);
-    };
-
-    const handleYES = async (e) => {
-        const res = await editRepo(state).then((response) => {
-            if (response.status === 200) {
-                setOpen(false);
-                onUpdate(true);
-            }
-        });
-        setError(true);
-    };
-    return (
-        <div>
-            <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-                EDIT
+        onUpdate(true);
+      }
+    });
+    setError(true);
+  };
+  return (
+    <div>
+      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+        EDIT
             </Button>
-            <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">Edit shell commands</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        Changing commands will affect shell execution process.
+      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+        <DialogTitle id="form-dialog-title">Edit shell commands</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Changing commands will affect shell execution process.
                     </DialogContentText>
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="command"
-                        label="Commands"
-                        name="command"
-                        autoComplete="command"
-                        autoFocus
-                        multiline
-                        rows={10}
-                        value={state.command}
-                        error={error}
-                        onChange={handleChangeTextField}
-                    />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="command"
+            label="Commands"
+            name="command"
+            autoComplete="command"
+            autoFocus
+            multiline
+            rows={10}
+            value={state.command}
+            error={error}
+            onChange={handleChangeTextField}
+          />
 
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleClose} color="primary">
-                        Cancel
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Cancel
                     </Button>
-                    <Button onClick={handleYES} color="primary">
-                        Save
+          <Button onClick={handleYES} color="primary">
+            Save
                     </Button>
-                </DialogActions>
-            </Dialog>
-        </div>
-    );
+        </DialogActions>
+      </Dialog>
+    </div>
+  );
 }
 
 const mapStateToProps = state => ({});
 
 export default withRouter(
-    connect(mapStateToProps, { editRepo })(FormDialog)
+  connect(mapStateToProps, { editRepo })(FormDialog)
 );
 

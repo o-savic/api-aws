@@ -33,5 +33,34 @@ public class UserService {
 		save(u);
 		return u;
 	}
+	
+	public User findByEmail(String email) {
+		return userRepository.findByEmail(email);
+	}
+	
+	public User updateUser(Long id, User u) {
+		User user = userRepository.getOne(id);
+		if (user == null) {  
+			throw new BadRequestException("User cannot be changed if he doesn't exist.");
+		}
+		user.setFirstName(u.getFirstName());
+		user.setLastName(u.getLastName());
+		user.setUsername(u.getUsername());
+		save(user);
+		return user;
+	}
+	
+	public User editPassByUser(Long id, String oldPassword, String newPassword) {
+		User user = userRepository.getOne(id);
+		if (user == null) {
+			throw new BadRequestException("User cannot be changed if he doesn't exist.");
+		}
+		if(!encoder.matches(oldPassword, user.getPassword())){
+			throw new BadRequestException("Old password isn't correct.");
+		}
+		user.setPassword(encoder.encode(newPassword));
+		save(user);
+		return user;
+	}
 
 }

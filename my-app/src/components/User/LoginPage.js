@@ -13,7 +13,8 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { login } from "../Store/actions/auth";
+import { login } from "../../Store/actions/auth";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -66,7 +67,7 @@ const SignInSide = ({ login, history }) => {
     e.preventDefault();
     const res = await login(state).then((response) => {
       if (response.status === 200) {
-          history.push("/home");
+        history.push("/git");
       }
     });
     setError(true);
@@ -78,6 +79,9 @@ const SignInSide = ({ login, history }) => {
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
           <Typography component="h1" variant="h5">
             Log in
           </Typography>

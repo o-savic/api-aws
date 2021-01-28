@@ -1,18 +1,21 @@
 import logo from './logo.svg';
 import './App.css';
 import React from "react";
-import HomePage from "./components/HomePage";
-import CommandPage from "./components/CommandPage";
-import LoginPage from "./components/LoginPage";
-import RegistrationPage from "./components/RegistrationPage"
+import GitPage from "./components/Git/GitPage";
+import CommandPage from "./components/Git/CommandPage";
+import LoginPage from "./components/User/LoginPage";
+import RegistrationPage from "./components/User/RegistrationPage"
+import NavigationBar from "./components/NavigationBar"
+import UserProfilePage from "./components/User/UserProfilePage"
+import SucccessfullyUpdatedPage from "./components/User/SuccessfullyUpdatedPage"
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 import { configureStore } from "./Store/index";
-import SuccessPage from './components/SuccessPage';
-import RepositoryListPage from './components/RepositoryListPage';
+import RepositoryListPage from './components/Git/RepositoryListPage';
 import { setAuthorizationToken, setUser } from "./Store/actions/auth";
 import jwtDecode from "jwt-decode";
+import { Redirect } from 'react-router';
 
 const store = configureStore();
 if (localStorage.jwtToken) {
@@ -41,14 +44,44 @@ function App() {
       <Router className="App">
         <Switch>
           <Route exact path="/" component={LoginPage} />
-          <Route exact path="/home" component={HomePage} />
-          <Route exact path="/command" component={CommandPage} />
-          <Route exact path="/success" component={SuccessPage} />
           <Route exact path="/login" component={LoginPage} />
           <Route exact path="/registration" component={RegistrationPage} />
-          <Route exact path="/repositories" component={RepositoryListPage} />
 
-
+          <Route exact path="/repositories" render={() => (
+            localStorage.getItem("jwtToken") == null ? (
+              <Redirect to="/login" />
+            ) : (
+                <RepositoryListPage />
+              )
+          )} />
+          <Route exact path="/profile" render={() => (
+            localStorage.getItem("jwtToken") == null ? (
+              <Redirect to="/login" />
+            ) : (
+                <UserProfilePage />
+              )
+          )} />
+          <Route exact path="/success" render={() => (
+            localStorage.getItem("jwtToken") == null ? (
+              <Redirect to="/login" />
+            ) : (
+                <SucccessfullyUpdatedPage />
+              )
+          )} />
+          <Route exact path="/command" render={() => (
+            localStorage.getItem("jwtToken") == null ? (
+              <Redirect to="/login" />
+            ) : (
+                <CommandPage />
+              )
+          )} />
+          <Route exact path="/git" render={() => (
+            localStorage.getItem("jwtToken") == null ? (
+              <Redirect to="/login" />
+            ) : (
+                <GitPage />
+              )
+          )} />
         </Switch>
       </Router>
     </Provider>

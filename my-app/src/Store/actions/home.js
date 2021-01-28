@@ -5,6 +5,7 @@ import {
   EDITED_REPO
 } from "../actionTypes";
 import axios from "axios";
+import { gitPath } from "../../properties/path-properites";
 
 export const cloneRepository = (git) => async (dispatch) => {
   try {
@@ -27,7 +28,7 @@ export const setGitRepository = (gitRepository) => ({
 
 export const executeShell = (command) => async (dispatch) => {
   try {
-    const commandLine = await axios.post("http://localhost:8081/api/git/writeShellCommands", command, {
+    const commandLine = await axios.post(gitPath + "/writeShellCommands", command, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("jwtToken"),
       },
@@ -46,7 +47,7 @@ export const setShellCommand = (commandLine) => ({
 
 export const getUserRepositories = () => async (dispatch) => {
   try {
-    const repositories = await axios.get("http://localhost:8081/api/git/repositories", {
+    const repositories = await axios.get(gitPath + "/repositories", {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("jwtToken"),
       },
@@ -64,7 +65,7 @@ export const setUserRepositories = (repositories) => ({
 
 export const editRepo = (repository) => async (dispatch) => {
   try {
-    const editedRepo = await axios.put("http://localhost:8081/api/git/" + `${repository.id}`, repository, {
+    const editedRepo = await axios.put(gitPath + `/${repository.id}`, repository, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("jwtToken"),
       },

@@ -1,6 +1,8 @@
 import {
     REGISTERED_USER,
     SET_CURRENT_USER,
+    EDITED_USER,
+    SET_USER_DATA
 } from "../actionTypes";
 
 const DEFAULT_STATE = {
@@ -22,6 +24,16 @@ export default (state = DEFAULT_STATE, action) => {
                 ...state,
                 registeredUser: action.registeredUser,
             };
+        case EDITED_USER:
+            return {
+                ...state, 
+                editedUser: action.editedUser
+            }
+        case SET_USER_DATA:
+            return {
+                ...state, 
+                userData: action.userData
+            }    
         default:
             return state;
     }
