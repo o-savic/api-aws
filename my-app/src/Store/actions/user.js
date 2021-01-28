@@ -41,7 +41,10 @@ export const getUserData = (email) => async (dispatch) => {
   try {
     const userData = await axios.get(userPath + `/${email}`);
     console.log(userData.data);
-    dispatch(setUserData(userData.data));
+    localStorage.setItem("firstName", userData.data.firstName);
+    localStorage.setItem("lastName", userData.data.lastName);
+    localStorage.setItem("username", userData.data.username);
+    localStorage.setItem("id", userData.data.id);
     return userData;
   } catch (err) {
     console.log(err);

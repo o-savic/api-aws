@@ -58,14 +58,12 @@ const UserProfile = ({ getUserData, userData, email, editUser, history }) => {
     setState({ loaded: false });
     getUserData(email);
     setState({ loaded: true });
-    if (userData != undefined) {
-      setState({
-        firstName: userData.firstName,
-        lastName: userData.lastName,
-        username: userData.username,
-        id: userData.id,
-      })
-    }
+    setState({
+      firstName: localStorage.getItem("firstName"),
+      lastName: localStorage.getItem("lastName"),
+      username: localStorage.getItem("username"),
+      id: localStorage.getItem("id"),
+    });
   }, []); //[getUserData, email]
 
   if (window.onbeforeunload) {
@@ -84,7 +82,7 @@ const UserProfile = ({ getUserData, userData, email, editUser, history }) => {
 
   const handlePasswordChange = async (e) => {
     e.preventDefault();
-    const resp = await Axios.put(userPath + `/editPass/user/${userData.id}`, {
+    const resp = await Axios.put(userPath + `/editPass/user/${state.id}`, {
       newPassword: state.newPassword,
       oldPassword: state.oldPassword,
     }).then((response) => {
@@ -97,7 +95,7 @@ const UserProfile = ({ getUserData, userData, email, editUser, history }) => {
         history.push("/success");
       }
     });
-      setError(true);
+    setError(true);
   };
   const handleChangeTextField = (e) => {
     setState({ ...state, [e.target.name]: e.target.value });
