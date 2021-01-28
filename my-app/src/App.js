@@ -2,10 +2,8 @@ import logo from './logo.svg';
 import './App.css';
 import React from "react";
 import GitPage from "./components/Git/GitPage";
-import CommandPage from "./components/Git/CommandPage";
 import LoginPage from "./components/User/LoginPage";
 import RegistrationPage from "./components/User/RegistrationPage"
-import NavigationBar from "./components/NavigationBar"
 import UserProfilePage from "./components/User/UserProfilePage"
 import SucccessfullyUpdatedPage from "./components/User/SuccessfullyUpdatedPage"
 
@@ -66,13 +64,6 @@ function App() {
               <Redirect to="/login" />
             ) : (
                 <SucccessfullyUpdatedPage />
-              )
-          )} />
-          <Route exact path="/command" render={() => (
-            localStorage.getItem("jwtToken") == null ? (
-              <Redirect to="/login" />
-            ) : (
-                <CommandPage />
               )
           )} />
           <Route exact path="/git" render={() => (

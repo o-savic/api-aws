@@ -35,11 +35,15 @@ public class GitRepo {
 	@Column
 	String command ;
 	
+	@Column
+	String name ;
+	
 	@OneToOne(fetch = FetchType.EAGER)
 	private User user;
 
-	public GitRepo(String repository_name, String location, String command, User user) {
+	public GitRepo(String name, String repository_name, String location, String command, User user) {
 		super();
+		this.name = name;
 		this.repository_name = repository_name;
 		this.location = location;
 		this.command = command;

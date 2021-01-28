@@ -39,7 +39,9 @@ const useStyles = makeStyles((theme) => ({
 const CloneRepository = ({ cloneRepository, history }) => {
   const [state, setState] = React.useState({
     name: "",
-    username: localStorage.getItem("username")
+    username: localStorage.getItem("username"),
+    command: "", 
+    repository_name: ""
   });
 
   const [error, setError] = React.useState(false);
@@ -54,7 +56,7 @@ const CloneRepository = ({ cloneRepository, history }) => {
     e.preventDefault();
     const res = await cloneRepository(state).then((response) => {
       if (response.status === 200) {
-        history.push("/command");
+        history.push("/repositories");
 
       }
     });
@@ -68,20 +70,51 @@ const CloneRepository = ({ cloneRepository, history }) => {
         <CssBaseline />
         <div className={classes.paper}>
           <Typography component="h1" variant="h5">
-            Add Git repository
+            Add Item
           </Typography>
           <form className={classes.form} noValidate>
-            <TextField
+          <TextField
               variant="outlined"
               margin="normal"
               required
               fullWidth
               id="name"
-              label="Git Repository"
+              label="Item name"
               name="name"
               autoFocus
               autoComplete="name"
               value={state.name}
+              error={error}
+              onChange={handleChangeTextField}
+          />  
+          <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="repository_name"
+              label="Git repository"
+              name="repository_name"
+              autoFocus
+              autoComplete="repository_name"
+              value={state.repository_name}
+              error={error}
+              onChange={handleChangeTextField}
+            />
+            
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="command"
+              label="Shell commands"
+              name="command"
+              multiline
+              rows={10}
+              autoFocus
+              autoComplete="command"
+              value={state.command}
               error={error}
               onChange={handleChangeTextField}
             />

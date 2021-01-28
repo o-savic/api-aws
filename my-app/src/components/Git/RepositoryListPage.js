@@ -78,6 +78,9 @@ const RepositoriesList = ({ getUserRepositories, repositories }) => {
                     <b><i>Name</i></b>
                   </TableCell>
                   <TableCell align="center">
+                    <b><i>Repository</i></b>
+                  </TableCell>
+                  <TableCell align="center">
                     <b><i>Location</i></b>
                   </TableCell>
                   <TableCell align="center">
@@ -97,6 +100,9 @@ const RepositoriesList = ({ getUserRepositories, repositories }) => {
                         role="checkbox"
                         key={row.id}
                       >
+                        <TableCell align="center">
+                          <p>{row.name} </p>
+                        </TableCell>
                         <TableCell align="center">
                           <p>{row.repository_name} </p>
                         </TableCell>

@@ -18,7 +18,8 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import GroupIcon from "@material-ui/icons/Group";
-
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import GitHubIcon from '@material-ui/icons/GitHub';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -125,7 +126,9 @@ const NavigationBar = ({ logout }) => {
           indicatorColor="primary"
           textColor="primary"
         >
-          <Tab label="Repositories" href="/repositories" {...a11yProps(0)} icon={<GroupIcon />} />
+          <Tab label="Repositories" href="/repositories" {...a11yProps(0)} icon={<GitHubIcon />} />
+          <Tab label="New repository" href="/git" {...a11yProps(0)} icon={<AddCircleIcon />} />
+
         </Tabs>
       </Drawer>
     </div>

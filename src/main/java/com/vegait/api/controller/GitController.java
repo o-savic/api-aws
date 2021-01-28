@@ -57,13 +57,14 @@ public class GitController {
 	@PostMapping("/repository")
 	public ResponseEntity<GitRepoDTO> cloneRepository(@RequestBody GitRepoDTO dto)
 			throws InvalidRemoteException, TransportException, GitAPIException, IOException {
-		String repository = dto.getName();
+		String repository = dto.getRepository_name();
 		String[] arrOfStr = repository.split("/", 5);
 		String repo = arrOfStr[4];
 		String[] repo_arr = repo.split("\\.");
 		String repo_name = repo_arr[0];
 
 		localPath = new File("C:\\Git\\" + dto.getUsername() + "\\" + repo_name);
+		System.out.println(dto.getRepository_name());
 
 		Git git = Git.cloneRepository().setURI(repository).setDirectory(localPath)
 				.setCredentialsProvider(new UsernamePasswordCredentialsProvider("o.savic", "mkpQnhbo_mG8uo7X3udC"))
@@ -79,21 +80,19 @@ public class GitController {
 		}
 		
 		user = userRepository.findByEmail(dto.getUsername());
-		gitRepo = new GitRepo(repo_name, localPath.getPath(), null, user);
+		gitRepo = new GitRepo(dto.getName(), dto.getRepository_name(), localPath.getPath(), dto.getCommand(), user);
+		gitRepoRepository.save(gitRepo);
+		CommandDTO commandDto = new CommandDTO(dto.getCommand());
+		writeShellCommands(commandDto);
 
 		return new ResponseEntity<GitRepoDTO>(dto, HttpStatus.OK);
 	}
 
 	@PostMapping("/writeShellCommands")
 	public ResponseEntity<CommandDTO> writeShellCommands(@RequestBody CommandDTO dto) throws IOException {
-
 		try (FileWriter writer = new FileWriter(localPath.getPath() + "\\script.bat")) {
 			writer.append(dto.getLine() + "\n");
 		}
-
-		gitRepo.setCommand(dto.getLine());
-		gitRepoRepository.save(gitRepo);
-		getAllUserRepos();
 		return new ResponseEntity<CommandDTO>(dto, HttpStatus.OK);
 	}
 
