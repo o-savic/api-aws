@@ -13,10 +13,11 @@ import Paper from "@material-ui/core/Paper";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import dense from "@material-ui/core/List/ListContext";
-import { getUserRepositories } from "../../Store/actions/home";
+import { getUserRepositories, executeShell } from "../../Store/actions/home";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import EditCommandDialog from "../dialogs/EditCommandDialog";
-import NavigationBar from "../../components/NavigationBar"
+import NavigationBar from "../NavigationBar"
+import DeleteRepoDialog from "../dialogs/DeleteRepoDialog";
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -40,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-const RepositoriesList = ({ getUserRepositories, repositories }) => {
+const RepositoriesList = ({ getUserRepositories, repositories, executeShell, history }) => {
 
   const [updated, setUpdated] = React.useState(false);
   useEffect(() => {
@@ -49,9 +50,19 @@ const RepositoriesList = ({ getUserRepositories, repositories }) => {
   }, [updated]);
 
   const classes = useStyles();
+  const [error, setError] = React.useState(false);
+
 
   const onUpdateTable = (value) => {
     setUpdated(value);
+  }
+
+  const buildRepo = async (e) => {
+    e.preventDefault();
+    const res = await executeShell().then((response) => {
+      console.log("Executing shell");
+    });
+    setError(true);
   }
 
   return (
@@ -86,7 +97,11 @@ const RepositoriesList = ({ getUserRepositories, repositories }) => {
                   <TableCell align="center">
                     <b><i>Command</i></b>
                   </TableCell>
-                  <TableCell>
+                  <TableCell align="center">
+                  </TableCell>
+                  <TableCell align="center">
+                  </TableCell>
+                  <TableCell align="center">
                   </TableCell>
                 </TableRow>
               </TableHead>
@@ -112,13 +127,26 @@ const RepositoriesList = ({ getUserRepositories, repositories }) => {
                         <TableCell align="center">
                           <p> {row.command}   </p>
                         </TableCell>
-                        <TableCell align="right">
+                        <TableCell align="center">
                           <EditCommandDialog
                             idV={row.id}
                             commandV={row.command}
+                            nameV={row.name}
                             locationV={row.location}
                             onUpdate={onUpdateTable}
                           />
+                        </TableCell>
+                        <TableCell align="center">
+                          <DeleteRepoDialog
+                            id={row.id}
+                            name={row.name}
+                            onUpdate={onUpdateTable}
+                          />
+                        </TableCell>
+                        <TableCell align="center">
+                          <Button variant="outlined" color="primary" onClick={buildRepo}>
+                            Build
+                          </Button>
                         </TableCell>
                       </TableRow>
                     );
@@ -152,6 +180,7 @@ const mapStateToProps = state => ({
 
 export default withRouter(
   connect(mapStateToProps, {
-    getUserRepositories
+    getUserRepositories,
+    executeShell
   })(RepositoriesList)
 );

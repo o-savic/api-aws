@@ -9,15 +9,12 @@ import Container from '@material-ui/core/Container';
 import { connect } from "react-redux";
 import { editUser } from "../../Store/actions/user";
 import { withRouter } from "react-router-dom";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { getUserData } from "../../Store/actions/user"
 import NavigationBar from "../../components/NavigationBar"
 import Divider from '@material-ui/core/Divider';
 import { userPath } from '../../properties/path-properites'
 import Axios from "axios";
-import { StarRate } from '@material-ui/icons';
-
-
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -61,7 +58,7 @@ const UserProfile = ({ getUserData, userData, email, editUser, history }) => {
     setState({
       firstName: localStorage.getItem("firstName"),
       lastName: localStorage.getItem("lastName"),
-      username: localStorage.getItem("username"),
+      username: localStorage.getItem("usernameV"),
       id: localStorage.getItem("id"),
     });
   }, []); //[getUserData, email]
@@ -109,7 +106,7 @@ const UserProfile = ({ getUserData, userData, email, editUser, history }) => {
         <CssBaseline />
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
+            <AccountCircleIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
             Your profile

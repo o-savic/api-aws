@@ -2,7 +2,7 @@ import {
   GIT_REPOSITORY,
   COMMAND_LINE,
   USER_REPOSITORIES,
-  EDITED_REPO
+  EDITED_REPO,
 } from "../actionTypes";
 
 const DEFAULT_STATE = {
@@ -33,7 +33,7 @@ export default (state = DEFAULT_STATE, action) => {
       return {
         ...state,
         editedRepo: action.editedRepo,
-      };
+      };    
     default:
       return state;
   }

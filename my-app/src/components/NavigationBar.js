@@ -20,6 +20,13 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import GroupIcon from "@material-ui/icons/Group";
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import GitHubIcon from '@material-ui/icons/GitHub';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import LockIcon from '@material-ui/icons/Lock';
+import EnhancedEncryptionIcon from '@material-ui/icons/EnhancedEncryption';
+import UserProfilePage from './User/UserProfilePage';
+import TabPanel from "./TabPanel";
+import GitPage from "./Home/GitPage"
+import RepositoryListPage from "./Home/RepositoryListPage"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -127,10 +134,21 @@ const NavigationBar = ({ logout }) => {
           textColor="primary"
         >
           <Tab label="Repositories" href="/repositories" {...a11yProps(0)} icon={<GitHubIcon />} />
-          <Tab label="New repository" href="/git" {...a11yProps(0)} icon={<AddCircleIcon />} />
+          <Tab label="New repository" href="/git" {...a11yProps(1)} icon={<AddCircleIcon />} />
+          <Divider />
+          <Tab label="Credentials" href="/myCredentials" {...a11yProps(2)} icon={<LockIcon />} />
+          <Tab label="Add credentials" href="/addCredentials" {...a11yProps(3)} icon={<EnhancedEncryptionIcon />} />
+          <Tab label="Profile" style={{position: "fixed", bottom:"0"}} href="/profile"  {...a11yProps(4)} icon={<AccountCircleIcon />} />
 
         </Tabs>
       </Drawer>
+
+      <main
+        className={clsx(classes.content, {
+          [classes.contentShift]: open,
+        })}
+      >
+      </main>
     </div>
   );
 }

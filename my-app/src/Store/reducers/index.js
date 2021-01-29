@@ -1,10 +1,11 @@
 import { combineReducers } from "redux";
 import home from "./home";
 import user from "./user";
+import credentials from "./credentials"
 const appReducer = combineReducers({
   home,
-  user
-
+  user,
+  credentials
 });
 
 const rootReducer = (state, action) => {

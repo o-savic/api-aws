@@ -40,6 +40,8 @@ public class GitRepo {
 	
 	@OneToOne(fetch = FetchType.EAGER)
 	private User user;
+	
+	Boolean deleted = false ;
 
 	public GitRepo(String name, String repository_name, String location, String command, User user) {
 		super();

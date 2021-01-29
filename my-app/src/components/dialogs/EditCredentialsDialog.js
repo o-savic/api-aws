@@ -13,9 +13,9 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
-import { editRepo } from '../../Store/actions/home';
+import { updateCredentials } from '../../Store/actions/credentials';
 
-const FormDialog = ({ idV, commandV, locationV,  nameV, onUpdate, editRepo }) => {
+const FormDialog = ({ idV, usernameV, descriptionV, passwordV, onUpdate, updateCredentials }) => {
 
   const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -32,10 +32,10 @@ const FormDialog = ({ idV, commandV, locationV,  nameV, onUpdate, editRepo }) =>
   const [open, setOpen] = React.useState(false);
 
   const [state, setState] = React.useState({
-    command: (commandV == null) ? "" : commandV,
     id: (idV == null) ? "" : idV,
-    name: (nameV == null) ? "" : nameV,
-    location: (locationV == null) ? "" : locationV,
+    username: (usernameV == null) ? "" : usernameV,
+    description: (descriptionV == null) ? "" : descriptionV,
+    password: "" 
   });
   const handleChangeTextField = (e) => {
     setState({ ...state, [e.target.name]: e.target.value });
@@ -51,7 +51,7 @@ const FormDialog = ({ idV, commandV, locationV,  nameV, onUpdate, editRepo }) =>
   };
 
   const handleYES = async (e) => {
-    const res = await editRepo(state).then((response) => {
+    const res = await updateCredentials(state).then((response) => {
       if (response.status === 200) {
         setOpen(false);
         onUpdate(true);
@@ -63,24 +63,24 @@ const FormDialog = ({ idV, commandV, locationV,  nameV, onUpdate, editRepo }) =>
     <div>
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
         EDIT
-            </Button>
+      </Button>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Configure</DialogTitle>
+        <DialogTitle id="form-dialog-title">Edit credentials</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Changing commands will affect shell execution process.
+            You will not be able to use old credentials.
           </DialogContentText>
           <TextField
             variant="outlined"
             margin="normal"
             required
             fullWidth
-            id="name"
-            label="Name"
-            name="name"
-            autoComplete="name"
+            id="username"
+            label="Username"
+            name="username"
+            autoComplete="username"
             autoFocus
-            value={state.name}
+            value={state.username}
             error={error}
             onChange={handleChangeTextField}
           />
@@ -89,15 +89,28 @@ const FormDialog = ({ idV, commandV, locationV,  nameV, onUpdate, editRepo }) =>
             margin="normal"
             required
             fullWidth
-            id="command"
-            label="Commands"
-            name="command"
-            autoComplete="command"
+            id="password"
+            label="Password"
+            name="password"
+            autoComplete="password"
+            autoFocus
+            type="password"
+            value={state.password}
+            error={error}
+            onChange={handleChangeTextField}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            fullWidth
+            id="description"
+            label="Description"
+            name="description"
+            autoComplete="description"
             autoFocus
             multiline
             rows={10}
-            value={state.command}
-            error={error}
+            value={state.description}
             onChange={handleChangeTextField}
           />
 
@@ -105,10 +118,10 @@ const FormDialog = ({ idV, commandV, locationV,  nameV, onUpdate, editRepo }) =>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
             Cancel
-                    </Button>
+          </Button>
           <Button onClick={handleYES} color="primary">
             Save
-                    </Button>
+          </Button>
         </DialogActions>
       </Dialog>
     </div>
@@ -118,6 +131,6 @@ const FormDialog = ({ idV, commandV, locationV,  nameV, onUpdate, editRepo }) =>
 const mapStateToProps = state => ({});
 
 export default withRouter(
-  connect(mapStateToProps, { editRepo })(FormDialog)
+  connect(mapStateToProps, { updateCredentials })(FormDialog)
 );
 

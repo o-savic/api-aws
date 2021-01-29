@@ -26,9 +26,9 @@ export const setGitRepository = (gitRepository) => ({
   gitRepository,
 });
 
-export const executeShell = (command) => async (dispatch) => {
+export const executeShell = () => async (dispatch) => {
   try {
-    const commandLine = await axios.post(gitPath + "/writeShellCommands", command, {
+    const commandLine = await axios.post(gitPath + "/execute", {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("jwtToken"),
       },
@@ -81,3 +81,11 @@ export const setEditedRepo = (editedRepo) => ({
   type: EDITED_REPO,
   editedRepo,
 });
+
+export const deleteRepo = (id) => async (dispatch) => {
+  try {
+    await axios.delete(gitPath + `/${id}`);
+  } catch (err) {
+    console.log(err);
+  }
+};

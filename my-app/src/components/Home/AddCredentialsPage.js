@@ -12,9 +12,12 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { connect } from "react-redux";
-import { cloneRepository } from "../../Store/actions/home";
 import { withRouter } from "react-router-dom";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import { addUserCredentials } from "../../Store/actions/credentials"
 import NavigationBar from "../../components/NavigationBar"
+import LockIcon from '@material-ui/icons/Lock';
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -36,12 +39,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CloneRepository = ({ cloneRepository, history }) => {
+const AddCredentials = ({ addUserCredentials, history, email }) => {
   const [state, setState] = React.useState({
-    name: "",
-    username: localStorage.getItem("username"),
-    command: "", 
-    repository_name: ""
+    username: "",
+    password: "",
+    id: "",
+    description: ""
   });
 
   const [error, setError] = React.useState(false);
@@ -51,13 +54,11 @@ const CloneRepository = ({ cloneRepository, history }) => {
     setState({ ...state, [e.target.name]: e.target.value });
   };
 
-  const email = localStorage.getItem("username");
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await cloneRepository(state).then((response) => {
-      if (response.status === 200) {
-        history.push("/repositories");
-
+    const res = await addUserCredentials(email, state).then((response) => {
+      if (response.status === 201) {
+        history.push("/myCredentials");
       }
     });
     setError(true);
@@ -69,56 +70,71 @@ const CloneRepository = ({ cloneRepository, history }) => {
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockIcon />
+          </Avatar>
           <Typography component="h1" variant="h5">
-            Add Item
-          </Typography>
+            Add Credentials
+        </Typography>
           <form className={classes.form} noValidate>
-          <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="name"
-              label="Item name"
-              name="name"
-              autoFocus
-              autoComplete="name"
-              value={state.name}
-              error={error}
-              onChange={handleChangeTextField}
-          />  
-          <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="repository_name"
-              label="Git repository"
-              name="repository_name"
-              autoFocus
-              autoComplete="repository_name"
-              value={state.repository_name}
-              error={error}
-              onChange={handleChangeTextField}
-            />
-            
             <TextField
               variant="outlined"
               margin="normal"
               required
               fullWidth
-              id="command"
-              label="Shell commands"
-              name="command"
-              multiline
-              rows={10}
+              id="username"
+              label="Username"
+              name="username"
+              autoComplete="username"
               autoFocus
-              autoComplete="command"
-              value={state.command}
+              value={state.username}
               error={error}
               onChange={handleChangeTextField}
             />
 
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="New password"
+              type="password"
+              id="password"
+              value={state.password}
+              autoComplete="current-password"
+              error={error}
+              onChange={handleChangeTextField}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              id="ide"
+              label="ID"
+              name="id"
+              autoComplete="ID"
+              autoFocus
+              value={state.id}
+              error={error}
+              onChange={handleChangeTextField}
+            />
+
+            <TextField
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              id="description"
+              label="Description"
+              name="description"
+              multiline
+              rows={10}
+              autoFocus
+              autoComplete="description"
+              value={state.description}
+              error={error}
+              onChange={handleChangeTextField}
+            />
             <Button
               type="submit"
               fullWidth
@@ -128,7 +144,7 @@ const CloneRepository = ({ cloneRepository, history }) => {
               onClick={handleSubmit}
             >
               OK
-            </Button>
+          </Button>
 
           </form>
         </div>
@@ -138,6 +154,8 @@ const CloneRepository = ({ cloneRepository, history }) => {
   );
 };
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+  email: state.user.user.sub
+});
 
-export default withRouter(connect(mapStateToProps, { cloneRepository })(CloneRepository));
+export default withRouter(connect(mapStateToProps, { addUserCredentials })(AddCredentials));

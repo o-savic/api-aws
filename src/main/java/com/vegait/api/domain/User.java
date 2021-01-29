@@ -1,10 +1,13 @@
 package com.vegait.api.domain;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -33,15 +36,19 @@ public class User {
 	@NotBlank
 	@Size(max = 50)
 	@Email
+	@Column(nullable = false, unique = true)
 	private String email;
 
 	@NotBlank
-	@Column(name = "username")
+	@Column(name = "username", nullable = false)
 	private String username;
 
 	@NotBlank
 	@Size(max = 100)
 	private String password;
+	
+	@OneToMany
+	private List<Credentials> credentials ;
 
 	public User(String firstName, String lastName, @NotBlank @Size(max = 50) @Email String email,
 			@NotBlank String username, @NotBlank @Size(max = 100) String password) {

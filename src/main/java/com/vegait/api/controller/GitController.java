@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,6 +35,7 @@ import com.vegait.api.dto.GitRepoDTO;
 import com.vegait.api.repo.CommandRepository;
 import com.vegait.api.repo.GitRepoRepository;
 import com.vegait.api.repo.UserRepository;
+import com.vegait.api.service.GitRepoService;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -53,6 +55,9 @@ public class GitController {
 	
 	@Autowired
 	UserRepository userRepository ;
+	
+	@Autowired
+	GitRepoService service ;
 
 	@PostMapping("/repository")
 	public ResponseEntity<GitRepoDTO> cloneRepository(@RequestBody GitRepoDTO dto)
@@ -141,11 +146,19 @@ public class GitController {
 	public ResponseEntity<GitRepo> updateGitRepo(@PathVariable Long id, @RequestBody GitRepoDTO dto) throws IOException {
 		gitRepo = gitRepoRepository.findByRepoId(id);
 		gitRepo.setCommand(dto.getCommand());
+		gitRepo.setName(dto.getName());
 		gitRepoRepository.save(gitRepo);
 		localPath = new File(dto.getLocation());
 		CommandDTO commandDTO = new CommandDTO(dto.getCommand());
 		writeShellCommands(commandDTO);
 		return new ResponseEntity<GitRepo>(gitRepo, HttpStatus.OK);	
+	}
+	
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Object> deleteRepository(@PathVariable Long id) {
+		service.deleteRepo(id);
+		return new ResponseEntity<Object>(HttpStatus.NO_CONTENT); // code 204
+		
 	}
 	
 	
