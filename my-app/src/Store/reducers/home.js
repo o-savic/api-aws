@@ -3,6 +3,7 @@ import {
   COMMAND_LINE,
   USER_REPOSITORIES,
   EDITED_REPO,
+  WORKSPACE
 } from "../actionTypes";
 
 const DEFAULT_STATE = {
@@ -33,7 +34,12 @@ export default (state = DEFAULT_STATE, action) => {
       return {
         ...state,
         editedRepo: action.editedRepo,
-      };    
+      };   
+    case WORKSPACE:
+      return {
+        ...state, 
+        workspace: action.workspace
+      }
     default:
       return state;
   }

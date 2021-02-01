@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import React from "react";
 import GitPage from "./components/Home/GitPage";
+import WorkspacePage from "./components/Home/WorkspacePage"
 import AddCredentialsPage from "./components/Home/AddCredentialsPage";
 import CredentialsListPage from "./components/Home/CredentialsListPage";
 import LoginPage from "./components/User/LoginPage";
@@ -73,6 +74,14 @@ function App() {
               <Redirect to="/login" />
             ) : (
                 <GitPage />
+              )
+          )} />
+
+          <Route exact path="/workspace" render={() => (
+            localStorage.getItem("jwtToken") == null ? (
+              <Redirect to="/login" />
+            ) : (
+                <WorkspacePage />
               )
           )} />
 

@@ -2,7 +2,8 @@ import {
   GIT_REPOSITORY,
   COMMAND_LINE,
   USER_REPOSITORIES,
-  EDITED_REPO
+  EDITED_REPO,
+  WORKSPACE
 } from "../actionTypes";
 import axios from "axios";
 import { gitPath } from "../../properties/path-properites";
@@ -89,3 +90,21 @@ export const deleteRepo = (id) => async (dispatch) => {
     console.log(err);
   }
 };
+
+export const getWorkspace = (id) => async (dispatch) => {
+  try {
+    const workspace = await axios.get(gitPath + `/${id}` +"/workspace");
+    console.log(workspace.data);
+    dispatch(setWorkspace(workspace.data));
+    return workspace;
+  } catch (err) {
+    console.log(err);
+    return err.response;
+  }
+};
+
+export const setWorkspace = (workspace) => ({
+  type: WORKSPACE,
+  workspace,
+});
+

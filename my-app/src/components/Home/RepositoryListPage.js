@@ -13,7 +13,7 @@ import Paper from "@material-ui/core/Paper";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import dense from "@material-ui/core/List/ListContext";
-import { getUserRepositories, executeShell } from "../../Store/actions/home";
+import { getUserRepositories, executeShell, getWorkspace } from "../../Store/actions/home";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import EditCommandDialog from "../dialogs/EditCommandDialog";
 import NavigationBar from "../NavigationBar"
@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-const RepositoriesList = ({ getUserRepositories, repositories, executeShell, history }) => {
+const RepositoriesList = ({ getUserRepositories, repositories, executeShell, getWorkspace, workspace, history }) => {
 
   const [updated, setUpdated] = React.useState(false);
   useEffect(() => {
@@ -60,9 +60,17 @@ const RepositoriesList = ({ getUserRepositories, repositories, executeShell, his
   const buildRepo = async (e) => {
     e.preventDefault();
     const res = await executeShell().then((response) => {
-      console.log("Executing shell");
     });
     setError(true);
+  }
+
+  const handleGetWorkspace = async (id) => {
+    const res = await getWorkspace(id).then((response) => {
+      if (response.status === 200) {
+        localStorage.setItem("workspace", response.data.value);
+        history.push("/workspace");
+      }
+    });
   }
 
   return (
@@ -96,6 +104,8 @@ const RepositoriesList = ({ getUserRepositories, repositories, executeShell, his
                   </TableCell>
                   <TableCell align="center">
                     <b><i>Command</i></b>
+                  </TableCell>
+                  <TableCell align="center">
                   </TableCell>
                   <TableCell align="center">
                   </TableCell>
@@ -148,6 +158,11 @@ const RepositoriesList = ({ getUserRepositories, repositories, executeShell, his
                             Build
                           </Button>
                         </TableCell>
+                        <TableCell align="center">
+                          <Button variant="outlined" color="primary" onClick={() => handleGetWorkspace(row.id)}>
+                            Workspace
+                          </Button>
+                        </TableCell>
                       </TableRow>
                     );
                   })}
@@ -175,12 +190,14 @@ const RepositoriesList = ({ getUserRepositories, repositories, executeShell, his
 };
 
 const mapStateToProps = state => ({
-  repositories: state.home.repositories
+  repositories: state.home.repositories,
+  workspace: state.home.workspace
 });
 
 export default withRouter(
   connect(mapStateToProps, {
     getUserRepositories,
-    executeShell
+    executeShell,
+    getWorkspace
   })(RepositoriesList)
 );
