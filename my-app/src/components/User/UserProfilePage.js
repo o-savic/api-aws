@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useLayoutEffect } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -51,21 +51,30 @@ const UserProfile = ({ getUserData, userData, email, editUser, history }) => {
     loaded: false
   });
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setState({ loaded: false });
-    getUserData(email);
-    setState({ loaded: true });
-    setState({
-      firstName: localStorage.getItem("firstName"),
-      lastName: localStorage.getItem("lastName"),
-      username: localStorage.getItem("usernameV"),
-      id: localStorage.getItem("id"),
-    });
+
+    (async () => {
+      const result = await getUserData(email).then((response) => {
+        console.log("Status " + response.status);
+        if (response.status === 200) {
+          setState({ loaded: true });
+          setState({
+            firstName: localStorage.getItem("firstName"),
+            lastName: localStorage.getItem("lastName"),
+            username: localStorage.getItem("usernameV"),
+            id: localStorage.getItem("id"),
+          });
+        }
+      });
+    })();
   }, []); //[getUserData, email]
 
   if (window.onbeforeunload) {
     setState({ loaded: false })
   }
+
+  console.log("Loaded: " + state.loaded);
 
   const handleUpdate = async (e) => {
     e.preventDefault();
