@@ -62,8 +62,8 @@ const FormDialog = ({ idV, commandV, locationV,  nameV, onUpdate, editRepo }) =>
   return (
     <div>
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        EDIT
-            </Button>
+        CONFIGURE
+      </Button>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Configure</DialogTitle>
         <DialogContent>
