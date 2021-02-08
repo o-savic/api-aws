@@ -33,7 +33,7 @@ public class UserController {
 	@PostMapping
 	public ResponseEntity<UserDTO> register(@RequestBody UserDTO dto) {
 		User user = userService.register(
-				new User(dto.getFirstName(), dto.getFirstName(), dto.getEmail(), dto.getUsername(), dto.getPassword()));
+				new User(dto.getFirstName(), dto.getLastName(), dto.getEmail(), dto.getUsername(), dto.getPassword()));
 		UserDTO createdUserDTO = modelMapper.map(user, UserDTO.class);
 		return new ResponseEntity<UserDTO>(createdUserDTO, HttpStatus.CREATED); // code 201
 	}
