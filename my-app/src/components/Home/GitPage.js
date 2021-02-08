@@ -100,7 +100,7 @@ const CloneRepository = ({ cloneRepository, history }) => {
               label="Git repository"
               name="repository_name"
               autoFocus
-              autoComplete="repository_name"
+              autoComplete="name"
               value={state.repository_name}
               error={error}
               onChange={handleChangeTextField}

@@ -56,7 +56,6 @@ const UserProfile = ({ getUserData, userData, email, editUser, history }) => {
 
     (async () => {
       const result = await getUserData(email).then((response) => {
-        console.log("Status " + response.status);
         if (response.status === 200) {
           setState({ loaded: true });
           setState({
@@ -73,8 +72,6 @@ const UserProfile = ({ getUserData, userData, email, editUser, history }) => {
   if (window.onbeforeunload) {
     setState({ loaded: false })
   }
-
-  console.log("Loaded: " + state.loaded);
 
   const handleUpdate = async (e) => {
     e.preventDefault();
